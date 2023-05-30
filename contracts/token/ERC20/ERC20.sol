@@ -126,14 +126,15 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
         address from = msg.Sender;
         
-        require(from != address(0), "ERC20: transfer from the zero address");
-        require(to != address(0), "ERC20: transfer to the zero address");
-
         uint256 fromBalance = _balances[from];
+        
         require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
+        
         _balances[from] = fromBalance - amount;
         _balances[to] += amount;
+        
         emit Transfer(from, to, amount);
+        
         return true;
     }
 
